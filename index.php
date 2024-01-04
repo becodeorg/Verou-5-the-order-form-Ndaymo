@@ -43,6 +43,14 @@ function validate()
         if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
             $invalidFields[] = "Invalid email address.";
         }
+        // Check address fields
+        $addressFields = ["street", "streetnumber", "city", "zipcode"];
+        foreach ($addressFields as $field) {
+            if (empty($_POST[$field])) {
+                $invalidFields[] = ucfirst($field) . " is required.";
+            }
+        }
+
 
 
     }
