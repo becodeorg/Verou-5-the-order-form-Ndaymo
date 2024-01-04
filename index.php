@@ -24,7 +24,10 @@ function whatIsHappening()
 
 // TODO: provide some products (you may overwrite the example)
 $products = [
-    ['name' => 'Your favourite drink', 'price' => 2.5],
+    ['name' => 'B/W dad hat', 'price' => 15],
+    ['name' => 'Love penguins tshirt', 'price' => 25],
+    ['name' => 'Penguin beak mask', 'price' => 5],
+    ['name' => 'Madagscar penguins hoodie', 'price' => 100]
 ];
 
 $totalValue = 0;
@@ -32,26 +35,46 @@ $totalValue = 0;
 function validate()
 {
     // TODO: This function will send a list of invalid fields back
-    return [];
-}
+    $invalidFields = [];
 
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        // Check email
+        if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+            $invalidFields[] = "Invalid email address.";
+        }
+
+
+    }
+
+    return $invalidFields;
+
+
+}
 function handleForm()
 {
-    // TODO: form related tasks (step 1)
-
-    // Validation (step 2)
+    // Validation
     $invalidFields = validate();
+
     if (!empty($invalidFields)) {
-        // TODO: handle errors
+        // Handle errors: You can use these errors to display them in the form
+        foreach ($invalidFields as $error) {
+            echo "<div class='alert alert-danger'>$error</div>";
+        }
     } else {
-        // TODO: handle successful submission
+        var_dump($_POST);
+
+
+        // For now, let's just print a success message
+        echo "<div class='alert alert-success'>Order confirmed! Penguins are on their way!</div>";
     }
 }
 
-// TODO: replace this if by an actual check for the form to be submitted
-$formSubmitted = false;
+// Replace this if by an actual check for the form to be submitted
+$formSubmitted = !empty($_POST);
 if ($formSubmitted) {
     handleForm();
 }
+
 
 require 'form-view.php';
