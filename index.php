@@ -51,7 +51,10 @@ function validate()
             }
         }
 
-
+        // Check product selection
+        if (empty($_POST["products"])) {
+            $invalidFields[] = "Select at least one product.";
+        }
 
     }
 
