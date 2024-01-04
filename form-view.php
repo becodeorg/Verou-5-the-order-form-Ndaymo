@@ -16,18 +16,18 @@
     <h1>Hey Penguins!</h1>
     <h2>Ready to order?</h2>
     <?php // Navigation for when you need it ?>
-    <?php /*
+    
 <nav>
 <ul class="nav">
 <li class="nav-item">
-<a class="nav-link active" href="?food=1">Order food</a>
+<a class="nav-link active" href="?food=1">Order Merch</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="?food=0">Order drinks</a>
+<a class="nav-link" href="?food=0">Order Food</a>
 </li>
 </ul>
 </nav>
-*/?>
+
     <form method="POST" action="index.php">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -65,9 +65,10 @@
         <fieldset>
             <legend>Products</legend>
             <?php foreach ($products as $i => $product): ?>
-                                        <label>
+                                            <label>
                                             <?php // <?= is equal to <?php echo ?>
-                                            <input type="checkbox" value="1" name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?> -
+                                            <input type="checkbox" value="1" name="products[<?php echo $i ?>]"/> 
+                                            <?php echo $product['name'] ?> -
                                             &euro; <?= number_format($product['price'], 2) ?></label><br />
             <?php endforeach; ?>
         </fieldset>
@@ -75,7 +76,7 @@
         <button type="submit" class="btn btn-primary">Order!</button>
     </form>
 
-    <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in merch .</footer>
+    <footer>You already ordered <strong>&euro; <?= isset($_POST["totalAmount"]) ? $_POST["totalAmount"] : '0'; ?></strong> in merch .</footer>
 </div>
 
 <style>

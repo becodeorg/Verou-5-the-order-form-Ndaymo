@@ -22,6 +22,8 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
+$city = $email = $street = $zipcode = "";
+
 // TODO: provide some products (you may overwrite the example)
 $products = [
     ['name' => 'B/W dad hat', 'price' => 15],
@@ -60,25 +62,71 @@ function validate()
 
     return $invalidFields;
 
-
 }
+
+
 function handleForm()
-{
-    // Validation
-    $invalidFields = validate();
+{ {
+        // Assuming you have already defined your $products array
+        global $products;
 
-    if (!empty($invalidFields)) {
-        // Handle errors: You can use these errors to display them in the form
-        foreach ($invalidFields as $error) {
-            echo "<div class='alert alert-danger'>$error</div>";
+        // Validation
+        $invalidFields = validate();
+
+        if (!empty($invalidFields)) {
+            // Handle errors: You can use these errors to display them in the form
+            foreach ($invalidFields as $error) {
+                echo "<div class='alert alert-danger'>$error</div>";
+            }
+        } else {
+            // Process the order and display the shopping cart
+            function processOrder($selectedProducts)
+            {
+                global $products;
+
+                $totalAmount = 0;
+
+                echo "<h3>You selected:</h3>";
+                echo "<ul>";
+
+                foreach ($selectedProducts as $productId => $quantity) {
+                    if (isset($products[$productId])) {
+                        $product = $products[$productId];
+                        $productName = $product['name'];
+                        $productPrice = $product['price'];
+
+                        $subtotal = $quantity * $productPrice;
+                        $totalAmount += $subtotal;
+
+                        echo "<li>" . $productName . " - Quantity: " . $quantity . " - &euro;" . number_format($subtotal, 2) . "</li>";
+                    }
+                }
+
+                echo "</ul>";
+
+                // Display total amount
+                echo "<p>Total Amount: &euro;" . number_format($totalAmount, 2) . "</p>";
+            }
+
+            $selectedProducts = isset($_POST['products']) ? $_POST['products'] : [];
+
+            // Process the order and display the shopping cart
+            processOrder($selectedProducts);
         }
-    } else {
-        var_dump($_POST);
-
-
-        // For now, let's just print a success message
-        echo "<div class='alert alert-success'>Order confirmed! Penguins are on their way!</div>";
     }
+}
+
+function getProductByName($productName)
+{
+    global $products;
+
+    foreach ($products as $product) {
+        if ($product['name'] === $productName) {
+            return $product;
+        }
+    }
+
+    return null;
 }
 
 // Replace this if by an actual check for the form to be submitted
