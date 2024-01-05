@@ -1,6 +1,6 @@
 body {
-  background-image: url(../penguins.avif);
+  background-image: url(../penguins.webp);
   background-repeat: no-repeat;
   background-position: top right;
-  background-size: 50%;
+  background-size: 30%;
 }

@@ -101,6 +101,8 @@ function processOrder($selectedProducts)
 
     // Display total amount
     echo "<p>Total Amount: &euro;" . number_format($totalAmount, 2) . "</p>";
+    $_SESSION['totalAmount'] = $totalAmount;
+    return $totalAmount;
 }
 
 function handleForm()
