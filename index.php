@@ -41,18 +41,27 @@ function validate()
     // TODO: This function will send a list of invalid fields back
     $invalidFields = [];
 
-    // Check if the form is submitted
+    // Check if the form is submitted first
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Check email
         if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
             $invalidFields[] = "Invalid email address.";
         }
-        // Check address fields
-        $addressFields = ["street", "streetnumber", "city", "zipcode"];
+        // Check address fields , "zipcode"
+        $addressFields = ["street", "city"];
         foreach ($addressFields as $field) {
             if (empty($_POST[$field])) {
                 $invalidFields[] = ucfirst($field) . " is required.";
             }
+        }
+        $streetNumber = $_POST["streetnumber"];
+        if (empty($streetNumber) || !is_numeric($streetNumber)) {
+            $invalidFields[] = "Street number must be not empty and a number";
+        }
+
+        $zipCode = $_POST["zipcode"];
+        if (empty($zipCode) || !is_numeric($zipCode)) {
+            $invalidFields[] = "Zipcode must be a number and not empty";
         }
 
         // Check product selection
