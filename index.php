@@ -116,18 +116,7 @@ function handleForm()
     }
 }
 
-function getProductByName($productName)
-{
-    global $products;
 
-    foreach ($products as $product) {
-        if ($product['name'] === $productName) {
-            return $product;
-        }
-    }
-
-    return null;
-}
 
 // Replace this if by an actual check for the form to be submitted
 $formSubmitted = !empty($_POST);
