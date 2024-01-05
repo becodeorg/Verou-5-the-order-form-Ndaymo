@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 // We are going to use session variables so we need to enable sessions
 session_start();
+whatIsHappening();
 
 // Use this function when you need to need an overview of these variables
 function whatIsHappening()
@@ -29,9 +30,13 @@ $products = [
     ['name' => 'B/W dad hat', 'price' => 15],
     ['name' => 'Love penguins tshirt', 'price' => 25],
     ['name' => 'Penguin beak mask', 'price' => 5],
-    ['name' => 'Bucket of tuna', 'price' => 9.99],
     ['name' => 'Mufasa fake moustache', 'price' => 1],
     ['name' => 'Madagscar penguins hoodie', 'price' => 100]
+];
+$fish = [
+    ['name' => 'Bucket of tuna', 'price' => 9.99],
+    ['name' => 'Scar brocoli bites', 'price' => 0.01],
+    ['name' => 'Pumba munchies', 'price' => 100]
 ];
 
 $totalValue = 0;
@@ -77,7 +82,7 @@ function validate()
 
 function processOrder($selectedProducts)
 {
-    global $products;
+    global $products, $fish;
 
     $totalAmount = 0;
 
@@ -85,15 +90,28 @@ function processOrder($selectedProducts)
     echo "<ul>";
 
     foreach ($selectedProducts as $productId => $quantity) {
-        if (isset($products[$productId])) {
-            $product = $products[$productId];
-            $productName = $product['name'];
-            $productPrice = $product['price'];
+        if ($_GET["food"] == 0) {
+            if (isset($products[$productId])) {
+                $product = $products[$productId];
+                $productName = $product['name'];
+                $productPrice = $product['price'];
 
-            $subtotal = $quantity * $productPrice;
-            $totalAmount += $subtotal;
+                $subtotal = $quantity * $productPrice;
+                $totalAmount += $subtotal;
 
-            echo "<li>" . $productName . " - Quantity: " . $quantity . " - &euro;" . number_format($subtotal, 2) . "</li>";
+                echo "<li>" . $productName . " - Quantity: " . $quantity . " - &euro;" . number_format($subtotal, 2) . "</li>";
+            }
+        } else if ($_GET["food"] == 1) {
+            if (isset($fish[$productId])) {
+                $product = $fish[$productId];
+                $productName = $product['name'];
+                $productPrice = $product['price'];
+
+                $subtotal = $quantity * $productPrice;
+                $totalAmount += $subtotal;
+
+                echo "<li>" . $productName . " - Quantity: " . $quantity . " - &euro;" . number_format($subtotal, 2) . "</li>";
+            }
         }
     }
 
@@ -109,7 +127,6 @@ function handleForm()
 {
     // Assuming you have already defined your $products array
     global $products;
-
     // Validation
     $invalidFields = validate();
 
