@@ -66,55 +66,55 @@ function validate()
 
 
 function handleForm()
-{ {
-        // Assuming you have already defined your $products array
-        global $products;
+{
+    // Assuming you have already defined your $products array
+    global $products;
 
-        // Validation
-        $invalidFields = validate();
+    // Validation
+    $invalidFields = validate();
 
-        if (!empty($invalidFields)) {
-            // Handle errors: You can use these errors to display them in the form
-            foreach ($invalidFields as $error) {
-                echo "<div class='alert alert-danger'>$error</div>";
-            }
-        } else {
-            // Process the order and display the shopping cart
-            function processOrder($selectedProducts)
-            {
-                global $products;
-
-                $totalAmount = 0;
-
-                echo "<h3>You selected:</h3>";
-                echo "<ul>";
-
-                foreach ($selectedProducts as $productId => $quantity) {
-                    if (isset($products[$productId])) {
-                        $product = $products[$productId];
-                        $productName = $product['name'];
-                        $productPrice = $product['price'];
-
-                        $subtotal = $quantity * $productPrice;
-                        $totalAmount += $subtotal;
-
-                        echo "<li>" . $productName . " - Quantity: " . $quantity . " - &euro;" . number_format($subtotal, 2) . "</li>";
-                    }
-                }
-
-                echo "</ul>";
-
-                // Display total amount
-                echo "<p>Total Amount: &euro;" . number_format($totalAmount, 2) . "</p>";
-            }
-
-            $selectedProducts = isset($_POST['products']) ? $_POST['products'] : [];
-
-            // Process the order and display the shopping cart
-            processOrder($selectedProducts);
+    if (!empty($invalidFields)) {
+        // Handle errors: You can use these errors to display them in the form
+        foreach ($invalidFields as $error) {
+            echo "<div class='alert alert-danger'>$error</div>";
         }
+    } else {
+        // Process the order and display the shopping cart
+        function processOrder($selectedProducts)
+        {
+            global $products;
+
+            $totalAmount = 0;
+
+            echo "<h3>You selected:</h3>";
+            echo "<ul>";
+
+            foreach ($selectedProducts as $productId => $quantity) {
+                if (isset($products[$productId])) {
+                    $product = $products[$productId];
+                    $productName = $product['name'];
+                    $productPrice = $product['price'];
+
+                    $subtotal = $quantity * $productPrice;
+                    $totalAmount += $subtotal;
+
+                    echo "<li>" . $productName . " - Quantity: " . $quantity . " - &euro;" . number_format($subtotal, 2) . "</li>";
+                }
+            }
+
+            echo "</ul>";
+
+            // Display total amount
+            echo "<p>Total Amount: &euro;" . number_format($totalAmount, 2) . "</p>";
+        }
+
+        $selectedProducts = isset($_POST['products']) ? $_POST['products'] : [];
+
+        // Process the order and display the shopping cart
+        processOrder($selectedProducts);
     }
 }
+
 
 
 
