@@ -29,6 +29,8 @@ $products = [
     ['name' => 'B/W dad hat', 'price' => 15],
     ['name' => 'Love penguins tshirt', 'price' => 25],
     ['name' => 'Penguin beak mask', 'price' => 5],
+    ['name' => 'Bucket of tuna', 'price' => 9.99],
+    ['name' => 'Mufasa fake moustache', 'price' => 1],
     ['name' => 'Madagscar penguins hoodie', 'price' => 100]
 ];
 
@@ -64,6 +66,33 @@ function validate()
 
 }
 
+function processOrder($selectedProducts)
+{
+    global $products;
+
+    $totalAmount = 0;
+
+    echo "<h3>You selected:</h3>";
+    echo "<ul>";
+
+    foreach ($selectedProducts as $productId => $quantity) {
+        if (isset($products[$productId])) {
+            $product = $products[$productId];
+            $productName = $product['name'];
+            $productPrice = $product['price'];
+
+            $subtotal = $quantity * $productPrice;
+            $totalAmount += $subtotal;
+
+            echo "<li>" . $productName . " - Quantity: " . $quantity . " - &euro;" . number_format($subtotal, 2) . "</li>";
+        }
+    }
+
+    echo "</ul>";
+
+    // Display total amount
+    echo "<p>Total Amount: &euro;" . number_format($totalAmount, 2) . "</p>";
+}
 
 function handleForm()
 {
@@ -80,33 +109,7 @@ function handleForm()
         }
     } else {
         // Process the order and display the shopping cart
-        function processOrder($selectedProducts)
-        {
-            global $products;
 
-            $totalAmount = 0;
-
-            echo "<h3>You selected:</h3>";
-            echo "<ul>";
-
-            foreach ($selectedProducts as $productId => $quantity) {
-                if (isset($products[$productId])) {
-                    $product = $products[$productId];
-                    $productName = $product['name'];
-                    $productPrice = $product['price'];
-
-                    $subtotal = $quantity * $productPrice;
-                    $totalAmount += $subtotal;
-
-                    echo "<li>" . $productName . " - Quantity: " . $quantity . " - &euro;" . number_format($subtotal, 2) . "</li>";
-                }
-            }
-
-            echo "</ul>";
-
-            // Display total amount
-            echo "<p>Total Amount: &euro;" . number_format($totalAmount, 2) . "</p>";
-        }
 
         $selectedProducts = isset($_POST['products']) ? $_POST['products'] : [];
 
